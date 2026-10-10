@@ -1,0 +1,25 @@
+name: sri_lanka_plate
+description: "Sri Lanka's licence plates for the plate_core library — white front and yellow rear plates, black ink, Latin alphabets and an advisory validator."
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  plate_core: ^0.11.5
+  plate_alphabet: ^0.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  assets:
+    - assets/icons/emblem_of_sri_lanka.svg
+    - assets/icons/emblem_of_sri_lanka.png
