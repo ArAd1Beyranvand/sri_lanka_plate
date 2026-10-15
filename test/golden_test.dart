@@ -26,9 +26,30 @@ void main() {
   /// category id -> (spec, theme, space-separated sample value)
   final Map<String, (PlateSpec, PlateTheme, String)> cases =
       <String, (PlateSpec, PlateTheme, String)>{
-    'front': (SriLankaPlates.front, SriLankaThemes.front, 'C P A B O 1 2 3 4'),
-    'rear': (SriLankaPlates.rear, SriLankaThemes.rear, 'S P Q L 9 9 0 4'),
-  };
+        'front': (SriLankaPlates.front, SriLankaThemes.front, 'CP ABO 1234'),
+        'rear': (SriLankaPlates.rear, SriLankaThemes.rear, 'SP QL 9904'),
+        'front_two_letters': (
+          SriLankaPlates.front,
+          SriLankaThemes.front,
+          'WP AB 5678',
+        ),
+      };
+
+  test('fields: letters 2-3, completes at the minimum', () {
+    final PlateSpec spec = SriLankaPlates.front;
+    expect(spec.slots.length, 3);
+    expect(spec.slots[1].minLength, 2);
+    expect(spec.slots[1].length, 3);
+    final PlateController c = PlateController.fromValues(spec, [
+      'WP',
+      'A',
+      '1234',
+    ]);
+    expect(c.isCompleted, isFalse);
+    c.setAt(1, 'AB');
+    expect(c.isCompleted, isTrue);
+    c.dispose();
+  });
 
   for (final MapEntry<String, (PlateSpec, PlateTheme, String)> c
       in cases.entries) {
@@ -57,6 +78,9 @@ void main() {
             ),
           ),
         ),
+      );
+      await tester.runAsync(
+        () => Future<void>.delayed(const Duration(milliseconds: 300)),
       );
       await tester.pumpAndSettle();
       await expectLater(

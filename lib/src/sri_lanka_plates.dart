@@ -1,11 +1,13 @@
+import 'dart:math';
+
 import 'package:flutter/widgets.dart' show AssetImage, EdgeInsets;
 import 'package:plate_alphabet/plate_alphabet.dart';
 import 'package:plate_core/plate_core.dart';
 
 import 'sri_lanka_country.dart';
 
-/// One group of evenly pitched cells: [count] cells centred from [cx] at
-/// [pitch], in a box [top]..[top]+[height] tall.
+/// One field of up to [count] evenly pitched cells centred on [cx] at
+/// [pitch], in a box [top]..[top]+[height] tall; [minLength] makes it variable.
 class _Run {
   const _Run(
     this.key,
@@ -14,13 +16,15 @@ class _Run {
     this.cx,
     this.pitch,
     this.top,
-    this.height,
-  );
+    this.height, {
+    this.minLength,
+  });
 
   final String key;
   final PlateAlphabet alphabet;
   final int count;
   final double cx, pitch, top, height;
+  final int? minLength;
 }
 
 /// What one design shares: the canvas, the emblem box, the runs and the
@@ -73,7 +77,16 @@ abstract final class _Layout {
     emblem: PlateBox(14, 10, 24, 36),
     runs: <_Run>[
       _Run('province', SriLankaAlphabets.letters, 2, 46.55, 29.5, 43.5, 60),
-      _Run('letters', SriLankaAlphabets.letters, 3, 182.7, 55.8, 0, 110),
+      _Run(
+        'letters',
+        SriLankaAlphabets.letters,
+        3,
+        182.7,
+        55.8,
+        0,
+        110,
+        minLength: 2,
+      ),
       _Run('number', SriLankaAlphabets.digits, 4, 390.2, 56.2, 0, 110),
     ],
   );
@@ -108,19 +121,21 @@ abstract final class SriLankaPlates {
     final List<PlateSlot> slots = <PlateSlot>[];
     final List<PlateTextGroup> groups = <PlateTextGroup>[];
     for (final _Run r in d.runs) {
-      groups.add(
-        PlateTextGroup(<int>[
-          for (int i = 0; i < r.count; i++) slots.length + i,
-        ], key: r.key),
-      );
-      slots.addAll(
-        plateRegister(
+      groups.add(PlateTextGroup(<int>[slots.length], key: r.key));
+      slots.add(
+        PlateSlot(
           alphabet: r.alphabet,
-          count: r.count,
-          left: r.cx - r.pitch * r.count / 2,
-          top: r.top,
-          width: r.pitch,
-          height: r.height,
+          box: PlateBox(
+            r.cx - r.pitch * r.count / 2,
+            r.top,
+            r.pitch * r.count,
+            r.height,
+          ),
+          length: r.count,
+          minLength: r.minLength,
+          spacing: r.minLength == null
+              ? max(0, r.pitch - 0.6 * 0.72 * r.height)
+              : 0,
         ),
       );
     }
