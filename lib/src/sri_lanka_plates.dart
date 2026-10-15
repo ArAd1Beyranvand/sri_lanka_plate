@@ -5,6 +5,7 @@ import 'package:plate_alphabet/plate_alphabet.dart';
 import 'package:plate_core/plate_core.dart';
 
 import 'sri_lanka_country.dart';
+import 'sri_lanka_regions.dart';
 
 /// One field of up to [count] evenly pitched cells centred on [cx] at
 /// [pitch], in a box [top]..[top]+[height] tall; [minLength] makes it variable.
@@ -159,6 +160,7 @@ abstract final class SriLankaPlates {
           ),
       ],
       textGroups: groups,
+      resolveRegion: SriLankaRegions.captionOf,
     );
   }
 }
