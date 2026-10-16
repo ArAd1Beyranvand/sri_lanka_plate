@@ -2,8 +2,7 @@ import 'package:plate_core/plate_core.dart';
 
 import 'sri_lanka_colors.dart';
 
-/// Front: black on white inside a black frame, 2.5 of 110 thick (0.0227) as
-/// read off the vector reference. The rear is black on yellow; its frame and
+/// The front frame ratio is read off vector artwork; the rear's frame and
 /// radius are estimated from a photograph.
 abstract final class SriLankaThemes {
   static final PlateTheme front = PlateTheme.monochrome(

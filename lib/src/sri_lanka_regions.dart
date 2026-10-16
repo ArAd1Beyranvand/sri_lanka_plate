@@ -1,9 +1,4 @@
-import 'package:plate_core/plate_core.dart';
-
-/// Locates a Sri Lankan plate from its two-letter province code.
-///
-/// Source: the "Regional Identifier Codes" section of
-/// https://en.wikipedia.org/wiki/Vehicle_registration_plates_of_Sri_Lanka
+/// Province names by plate code.
 abstract final class SriLankaRegions {
   static const Map<String, String> _provinces = <String, String>{
     'CP': 'Central Province',
@@ -28,7 +23,6 @@ abstract final class SriLankaRegions {
     return names.length == 1 ? names.single : null;
   }
 
-  /// A [PlateLabelResolver] for [PlateSpec.resolveRegion].
   static String? captionOf(String Function(String key) group) =>
       lookup(group('province'));
 }

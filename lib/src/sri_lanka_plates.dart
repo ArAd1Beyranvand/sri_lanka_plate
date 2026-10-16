@@ -7,8 +7,8 @@ import 'package:plate_core/plate_core.dart';
 import 'sri_lanka_country.dart';
 import 'sri_lanka_regions.dart';
 
-/// One field of up to [count] evenly pitched cells centred on [cx] at
-/// [pitch], in a box [top]..[top]+[height] tall; [minLength] makes it variable.
+/// Up to [count] cells at [pitch] centred on [cx], in a box [height] tall
+/// from [top]; [minLength] makes the field variable.
 class _Run {
   const _Run(
     this.key,
@@ -28,8 +28,6 @@ class _Run {
   final int? minLength;
 }
 
-/// What one design shares: the canvas, the emblem box, the runs and the
-/// optional hyphen after the series.
 class _Design {
   const _Design({
     required this.id,
@@ -47,29 +45,12 @@ class _Design {
   final PlateBox? hyphen;
 }
 
-/// Where the ink sits, in plate units.
-///
-/// Front (`3_letter-2013_number_plate_Front`, vector artwork flattened to the
-/// documented 520×110): province `CP` ink x 20.8–74.8 (centres 31.8, 61.3),
-/// y 52–95; series `ABO` x 100–262.5 (centres 126.9, 185.4, 238.5, pitch
-/// ~56); digits x 283.5–499 (centres 305.8, 362.3, 416.4, 474.5, pitch ~56);
-/// series and digits y 10.5–95 (85 of ink). The emblem sits at x 14–38,
-/// y 10–46. The black frame is 2.5 thick. A 85-tall ink would need a 154 box
-/// on a 110 plate, so the boxes fill the canvas and the ink is ~60 (70%).
-///
-/// Rear (`Sri_Lanka-Southern_Province`, a photograph fitted CHECK and
-/// stretched; the plate's real size is not in the article, so the canvas
-/// 340×180 is the photo's 1.88 aspect). Numbers are fractions of the photo,
-/// good to a few units: emblem x 0.117–0.215, y 0.12–0.35; `SP` centres 38.3,
-/// 83.6, y 70–124; series `QL` centres 147, 208 (pitch 61), y 20–92; hyphen
-/// x 0.31–0.35 of the width right of `L`, y ~0.38; digits centres 132, 181.6,
-/// 231, 279.7 (pitch 49.2), y 108–178. The two rows overlap in their boxes
-/// but not in their ink.
-///
-/// Not drawn: the hologram sticker, the QR code and serial under the front
-/// number, and the other categories (the article gives no measurement for
-/// them). No diplomatic plate is implemented, so nothing Israel-specific
-/// exists here to refuse.
+/// Ink positions in plate units, measured from the vector front artwork
+/// (520x110) and a photograph of the rear. Rear values are good to a few
+/// units; its 340x180 canvas only matches the photo's aspect. The front's
+/// 85-unit ink would need a 154 box on a 110 plate, so boxes fill the canvas
+/// and the ink is ~70% of it. The rear's rows overlap in their boxes, not in
+/// their ink. The hologram, QR code and other categories are not drawn.
 abstract final class _Layout {
   static const _Design front = _Design(
     id: 'lk.front',
@@ -108,10 +89,8 @@ abstract final class _Layout {
   static const double hyphenGlyph = 30;
 }
 
-/// The Sri Lankan plates. Groups `province`, `letters` and `number`.
-///
-/// [front] is the one-line white plate, `CP ABO 1234`, with the province
-/// below the emblem; [rear] is the yellow two-row plate, `SP QL - 9904`.
+/// [front] is the one-line white plate (`CP ABO 1234`); [rear] the yellow
+/// two-row plate (`SP QL - 9904`). Groups: `province`, `letters`, `number`.
 abstract final class SriLankaPlates {
   static final PlateSpec front = _spec(_Layout.front);
   static final PlateSpec rear = _spec(_Layout.rear);
@@ -166,9 +145,7 @@ abstract final class SriLankaPlates {
 }
 
 const AssetImage _emblem = AssetImage(
-  // Commons: File:Emblem_of_Sri_Lanka.svg; assets/icons/emblem_of_sri_lanka.svg
-  // is the vector. It is a crest, so a decal; it prints in colour here where
-  // the plates stamp it in the ink.
+  // A coloured decal; the plates stamp the crest in ink.
   'assets/icons/emblem_of_sri_lanka.png',
   package: 'sri_lanka_plate',
 );
