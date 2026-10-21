@@ -131,12 +131,8 @@ abstract final class SriLankaPlates {
       decals: <PlateDecal>[PlateDecal(image: _emblem, box: d.emblem)],
       slots: slots,
       labels: <PlateLabel>[
-        if (d.hyphen != null)
-          PlateLabel(
-            text: '–',
-            box: d.hyphen!,
-            glyphHeight: _Layout.hyphenGlyph,
-          ),
+        if (d.hyphen case final hyphen?)
+          PlateLabel(text: '–', box: hyphen, glyphHeight: _Layout.hyphenGlyph),
       ],
       textGroups: groups,
       resolveRegion: SriLankaRegions.captionOf,
