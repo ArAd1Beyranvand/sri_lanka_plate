@@ -28,11 +28,7 @@ void main() {
       <String, (PlateSpec, PlateTheme, String)>{
         'front': (SriLankaPlates.front, SriLankaThemes.front, 'CP ABO 1234'),
         'rear': (SriLankaPlates.rear, SriLankaThemes.rear, 'SP QL 9904'),
-        'front_two_letters': (
-          SriLankaPlates.front,
-          SriLankaThemes.front,
-          'WP AB 5678',
-        ),
+        'front_two_letters': (SriLankaPlates.front, SriLankaThemes.front, 'WP AB 5678'),
       };
 
   test('fields: letters 2-3, completes at the minimum', () {
@@ -40,25 +36,17 @@ void main() {
     expect(spec.slots.length, 3);
     expect(spec.slots[1].minLength, 2);
     expect(spec.slots[1].length, 3);
-    final PlateController c = PlateController.fromValues(spec, [
-      'WP',
-      'A',
-      '1234',
-    ]);
+    final PlateController c = PlateController.fromValues(spec, ['WP', 'A', '1234']);
     expect(c.isCompleted, isFalse);
     c.setAt(1, 'AB');
     expect(c.isCompleted, isTrue);
     c.dispose();
   });
 
-  for (final MapEntry<String, (PlateSpec, PlateTheme, String)> c
-      in cases.entries) {
+  for (final MapEntry<String, (PlateSpec, PlateTheme, String)> c in cases.entries) {
     testWidgets(c.key, (tester) async {
       final (PlateSpec spec, PlateTheme theme, String values) = c.value;
-      final PlateController controller = PlateController.fromValues(
-        spec,
-        values.split(' '),
-      );
+      final PlateController controller = PlateController.fromValues(spec, values.split(' '));
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -79,14 +67,9 @@ void main() {
           ),
         ),
       );
-      await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 300)),
-      );
+      await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 300)));
       await tester.pumpAndSettle();
-      await expectLater(
-        find.byType(PlateView),
-        matchesGoldenFile('goldens/lk_${c.key}.png'),
-      );
+      await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/lk_${c.key}.png'));
       await tester.pumpWidget(const SizedBox.shrink());
       controller.dispose();
     });

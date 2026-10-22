@@ -9,8 +9,7 @@ class SriLankaValidator extends GatedPlateValidator {
   @override
   String get gateGroup => 'number';
 
-  static const String reasonProvince =
-      'The province is CP, EP, NC, NP, NW, SG, SP, UP or WP.';
+  static const String reasonProvince = 'The province is CP, EP, NC, NP, NW, SG, SP, UP or WP.';
   static const String reasonLetters = 'The series is two or three letters.';
   static const String reasonNumber = 'The number is four digits.';
 

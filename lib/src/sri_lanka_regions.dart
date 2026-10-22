@@ -23,6 +23,5 @@ abstract final class SriLankaRegions {
     return names.length == 1 ? names.single : null;
   }
 
-  static String? captionOf(String Function(String key) group) =>
-      lookup(group('province'));
+  static String? captionOf(String Function(String key) group) => lookup(group('province'));
 }

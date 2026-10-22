@@ -59,16 +59,7 @@ abstract final class _Layout {
     emblem: PlateBox(14, 10, 24, 36),
     runs: <_Run>[
       _Run('province', SriLankaAlphabets.letters, 2, 46.55, 29.5, 43.5, 60),
-      _Run(
-        'letters',
-        SriLankaAlphabets.letters,
-        3,
-        182.7,
-        55.8,
-        0,
-        110,
-        minLength: 2,
-      ),
+      _Run('letters', SriLankaAlphabets.letters, 3, 182.7, 55.8, 0, 110, minLength: 2),
       _Run('number', SriLankaAlphabets.digits, 4, 390.2, 56.2, 0, 110),
     ],
   );
@@ -105,17 +96,10 @@ abstract final class SriLankaPlates {
       slots.add(
         PlateSlot(
           alphabet: r.alphabet,
-          box: PlateBox(
-            r.cx - r.pitch * r.count / 2,
-            r.top,
-            r.pitch * r.count,
-            r.height,
-          ),
+          box: PlateBox(r.cx - r.pitch * r.count / 2, r.top, r.pitch * r.count, r.height),
           length: r.count,
           minLength: r.minLength,
-          spacing: r.minLength == null
-              ? max(0, r.pitch - 0.6 * 0.72 * r.height)
-              : 0,
+          spacing: r.minLength == null ? max(0, r.pitch - 0.6 * 0.72 * r.height) : 0,
         ),
       );
     }
@@ -124,10 +108,7 @@ abstract final class SriLankaPlates {
       country: SriLankaCountry.sri_lanka,
       canvasWidth: d.width,
       canvasHeight: d.height,
-      panel: PlatePanel(
-        box: PlateBox(0, 0, 0, d.height),
-        padding: EdgeInsets.zero,
-      ),
+      panel: PlatePanel(box: PlateBox(0, 0, 0, d.height), padding: EdgeInsets.zero),
       decals: <PlateDecal>[PlateDecal(image: _emblem, box: d.emblem)],
       slots: slots,
       labels: <PlateLabel>[
