@@ -1,7 +1,7 @@
 name: sri_lanka_plate
 description: "Sri Lanka's licence plates for the plate_core library — white front and yellow rear plates, black ink, Latin alphabets and an advisory validator."
 version: 0.1.0
-publish_to: none
+repository: https://github.com/ArAd1Beyranvand/sri_lanka_plate
 resolution: workspace
 
 environment:
